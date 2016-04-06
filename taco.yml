@@ -1,0 +1,10 @@
+---
+- name: taco tuesday
+  hosts: ALL 
+  gather_facts: false 
+  tasks:
+    - name: Details details 
+      shell: uname -a 
+      register: uname_val
+
+    - debug: var=uname_val
