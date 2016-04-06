@@ -1,6 +1,6 @@
 ---
 - name: taco tuesday
-  hosts: ALL 
+  hosts: all 
   gather_facts: false 
   tasks:
     - name: Details details 
