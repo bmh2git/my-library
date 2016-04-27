@@ -1,0 +1,48 @@
+---
+- name: Playbook to demonstrate add_host 
+  hosts: localhost 
+  connection: local
+  gather_facts: true 
+  tasks:
+    - name: Create Test Group
+      clc_group:
+        location: 'UC1'
+        name: 'addhost-demo'
+        state: present
+      register: clc_grp
+
+    - debug: var=clc_grp
+
+    - name: Generate password for server
+      command: openssl rand -base64 15
+      register: serverpass
+      changed_when: false
+
+    - name: Create add_host Server
+      clc_server:
+        name: addhst 
+        template: ubuntu-14-64
+        location: 'UC1'
+        group: 'addhost-demo'
+        count: 1
+        password: "{{ serverpass.stdout }}"
+      register: clc_svr
+
+    - debug: var=clc_svr
+
+    - name: Add the new server to the inventory
+      add_host: name={{clc_svr.servers[0].name}}  groups=addhost_group ansible_ssh_pass={{ serverpass.stdout }} ansible_ssh_host={{clc_svr.servers[0].ipaddress}} ansible_ssh_user=root ansible_host_key_checking=false
+      
+    - name: pause and give the system time to come online
+      pause:
+        seconds: 90 
+
+- hosts: addhost_group
+  gather_facts: false 
+  tasks:
+
+    - name: Refresh apt Cache
+      apt: update_cache=yes
+ 
+    - name: Install nginx 
+      apt: name=nginx state=present 

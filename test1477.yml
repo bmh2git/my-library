@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+    - name: testing rnr_location setting for item 1477
+      shell: uname -a
+      register: uname_out
+    - name: display results.  
+      debug: var=uname_out
