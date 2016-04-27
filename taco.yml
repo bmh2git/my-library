@@ -3,12 +3,6 @@
   hosts: all 
   gather_facts: false 
   tasks:
-    - name: just sleep for a bit
-      pause: 
-        minutes: 2
-        prompt: Sleeping for 2 minutes
-      
-
     - name: Details details 
       shell: uname -a 
       register: uname_val
