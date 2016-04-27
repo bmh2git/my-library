@@ -1,0 +1,10 @@
+---
+- hosts: all
+  vars:
+    rnr_location: minion.default.UC1
+  tasks:
+    - name: testing rnr_location setting for item 1465
+      shell: uname -a
+      register: uname_out
+    - name: display results.  
+      debug: var=uname_out
