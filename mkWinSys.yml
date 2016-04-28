@@ -1,5 +1,6 @@
 ---
 - hosts: localhost
+  connection: local
   gather_facts: False
   vars:
     create_host: true 
@@ -37,6 +38,7 @@
       add_host: groups=my_group name="{{clc_facts.server.id}}" ansible_host="{{clc_facts.server.details.ipAddresses[0].internal}}" ansible_user="{{clc_facts.server.credentials.userName}}" ansible_pass="{{clc_facts.server.credentials.password}}" ansible_connection=winrm
 
 - hosts: my_group
+  connection: winrm
   gather_facts: False
   tasks:
     - name: execute a command on the windows system
