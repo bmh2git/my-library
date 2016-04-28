@@ -1,0 +1,49 @@
+---
+- hosts: localhost
+  gather_facts: False
+  vars:
+    create_host: true 
+  tasks:
+    - block:
+      - name: create clc windows server
+        clc_server:
+          name: wtest
+          template: 'WIN2008R2STD-64'
+          location: 'CA1'
+          group: 'Default Group'
+          count: 1
+        register: clcsvr
+
+      - debug: var=clcsvr 
+
+      - name: pause for a minute
+        pause:
+          seconds: 60
+      when: create_host 
+    
+    - name: get server fact      
+      clc_server_fact:
+        server_id: "{{clcsvr.servers[0].name}}"
+        # server_id: ca1wftcwtest01 
+        credentials: true
+      register: clc_facts
+
+    - debug: var=clc_facts
+
+    - name: dump it
+      debug: var=clc_facts.server.details.ipAddresses[0].internal
+
+    - name: add server to in mem group
+      add_host: groups=my_group name="{{clc_facts.server.id}}" ansible_host="{{clc_facts.server.details.ipAddresses[0].internal}}" ansible_user="{{clc_facts.server.credentials.userName}}" ansible_pass="{{clc_facts.server.credentials.password}}" ansible_connection=winrm
+
+- hosts: my_group
+  gather_facts: False
+  tasks:
+    - name: execute a command on the windows system
+      win_environment:
+        state: present
+        name: TestVariable
+        value: "Test Value"
+        level: machine 
+      register: ipconfig
+    - debug: var=ipconfig
