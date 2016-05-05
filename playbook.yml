@@ -1,6 +1,10 @@
 ---
-- hosts: all 
+- name: sample test playbook
+  hosts: all 
   vars:
     vars_file: my_vars.yml
   tasks:
-    - include: file1.yml
+    - name: Say something
+      debug: msg="I have started..."
+    - name: Include something
+      include: file1.yml
