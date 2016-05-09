@@ -1,5 +1,5 @@
 ---
-- hosts: all 
+- hosts: ossl 
   gather_facts: false 
   tasks:
     - name: Print out all groups
