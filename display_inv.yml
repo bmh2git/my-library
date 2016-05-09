@@ -1,0 +1,7 @@
+---
+- hosts: all 
+  gather_facts: false 
+  tasks:
+    - name: Print out all groups
+      debug: msg="{{item}} - {{inventory_hostname}}"
+      with_items: "{{group_names}}"
