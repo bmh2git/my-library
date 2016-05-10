@@ -4,5 +4,8 @@
   gather_facts: false 
   tasks:
     - name: Print out server
-      debug: msg="{{inventory_hostname}} - {{item}}"
-      with_flattened: "{{group_names}}"
+      debug: msg="{{groups}}"
+      run_once: true
+    - name: print server
+      debug: msg="{{play_hosts}}"
+      run_once: true
