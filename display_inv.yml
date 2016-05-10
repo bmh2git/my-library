@@ -3,7 +3,7 @@
   gather_facts: false 
   tasks:
     - name: Print out groups
-      debug: var={{groups}}
+      debug: var={{group_names}}
       
     - name: Print out all servers
       debug: msg="{{item}} - {{inventory_hostname}}"
