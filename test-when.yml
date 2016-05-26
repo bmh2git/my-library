@@ -1,7 +1,7 @@
 ---
 - name: Test When family
   hosts: all
-  gather_facts: false
+  gather_facts: true
   tasks:
     - name: Print out uname when its a debian system
       shell: uname -a
