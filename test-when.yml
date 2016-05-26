@@ -1,0 +1,12 @@
+---
+- name: Test When family
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Print out uname when its a red hat system
+      shell: uname -a
+      when: ansible_os_family == "Debian"
+      register: the_stuff
+
+    - name: print it
+      debug: var=the_stuff
