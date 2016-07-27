@@ -1,0 +1,18 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: return uname
+      shell: uname -a
+      register: u_data
+      tags: uname
+    - name: display uname
+      debug: var=u_data
+      tags: uname
+    - name: return date
+      shell: date
+      register d_data
+      tags: date
+    - name: display date
+      debug: var=d_data
+      tags: date
