@@ -11,7 +11,7 @@
       tags: uname
     - name: return date
       shell: date
-      register d_data
+      register: d_data
       tags: date
     - name: display date
       debug: var=d_data
