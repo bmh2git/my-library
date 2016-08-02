@@ -1,0 +1,10 @@
+---
+- name: playbook to display specific env variables.
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: retrieve job-id
+      debug: msg="{{ rnr_job_id }}"
+
+    - name: retrieve execution-id
+      debug: msg="{{ rnr_execution_id }}"
